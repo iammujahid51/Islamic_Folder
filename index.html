@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>৪০ দিনের ইবাদত ট্র্যাকার</title>
+
+<style>
+:root{
+  --green:#1b5e20;
+  --light:#e8f5e9;
+  --gold:#c9a227;
+  --danger:#c62828;
+}
+
+body{
+  margin:0;
+  font-family: "Segoe UI", sans-serif;
+  background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url("https://images.unsplash.com/photo-1584551246679-0daf3d275d0f");
+  background-size:cover;
+  background-attachment:fixed;
+  color:#222;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  background:#ffffffee;
+  border-radius:16px;
+  padding:20px;
+}
+
+h1{
+  text-align:center;
+  color:var(--green);
+  margin-bottom:10px;
+}
+
+.subtitle{
+  text-align:center;
+  font-size:14px;
+  color:#555;
+  margin-bottom:20px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+  background:var(--light);
+  padding:15px;
+  border-radius:12px;
+  font-weight:bold;
+  text-align:center;
+}
+
+.grid-container{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+}
+
+.day-card{
+  background:#f9fff9;
+  border-radius:14px;
+  padding:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,.12);
+}
+
+.day-card h3{
+  text-align:center;
+  margin:5px 0 10px;
+  color:var(--green);
+}
+
+.waqt-item{
+  display:flex;
+  align-items:center;
+  font-size:14px;
+  margin-bottom:5px;
+}
+
+.status-badge{
+  display:block;
+  margin-top:8px;
+  padding:6px;
+  border-radius:8px;
+  font-size:13px;
+  text-align:center;
+}
+
+.complete{
+  background:#c8e6c9;
+  color:#1b5e20;
+}
+.incomplete{
+  background:#ffcdd2;
+  color:#b71c1c;
+}
+
+/* ===== Tasbih ===== */
+.tasbih-box{
+  margin-top:30px;
+  background:linear-gradient(135deg,#1b5e20,#2e7d32);
+  color:white;
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
+}
+
+.tasbih-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:15px;
+  margin-top:15px;
+}
+
+.tasbih-card{
+  background:#ffffff22;
+  padding:15px;
+  border-radius:14px;
+}
+
+.tasbih-card h3{
+  margin:5px 0;
+}
+
+.tasbih-card button{
+  margin-top:10px;
+  width:100%;
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  background:var(--gold);
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* Buttons */
+.btn-container{
+  text-align:center;
+  margin-top:30px;
+}
+
+.reset-btn{
+  background:var(--danger);
+  color:white;
+  padding:12px 25px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+#reward-msg{
+  display:none;
+  margin-top:25px;
+  background:#fff8e1;
+  padding:20px;
+  border-radius:15px;
+  border:2px dashed var(--gold);
+  text-align:center;
+}
+
+/* Mobile */
+@media(max-width:600px){
+  h1{font-size:22px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>৪০ দিনের সালাত চ্যালেঞ্জ</h1>
+<div class="subtitle">নিয়মিত নামাজ ও তাসবিহের আত্মিক যাত্রা</div>
+
+<div class="stats">
+  <div>মোট দিন<br><span id="total-days">0</span>/৪০</div>
+  <div>সফল দিন<br><span id="success-count">0</span></div>
+  <div>ছুটে গেছে<br><span id="missed-count">0</span></div>
+</div>
+
+<div id="grid" class="grid-container"></div>
+
+<div id="reward-msg">
+  <h2>মাশাআল্লাহ্‌</h2>
+  <p>আপনি ৪০ দিনের ইবাদত সফলভাবে সম্পন্ন করেছেন।<br>
+  আল্লাহ আপনার আমল কবুল করুন।</p>
+</div>
+
+<!-- Tasbih -->
+<div class="tasbih-box">
+<h2>📿 তাসবিহ কাউন্টার</h2>
+
+<div class="tasbih-grid">
+  <div class="tasbih-card">
+    <h3>সুবহানাল্লাহ</h3>
+    <div id="subhan">0</div>
+    <button onclick="inc('subhan')">+1</button>
+  </div>
+  <div class="tasbih-card">
+    <h3>আলহামদুলিল্লাহ</h3>
+    <div id="alham">0</div>
+    <button onclick="inc('alham')">+1</button>
+  </div>
+  <div class="tasbih-card">
+    <h3>আল্লাহু আকবার</h3>
+    <div id="akbar">0</div>
+    <button onclick="inc('akbar')">+1</button>
+  </div>
+</div>
+</div>
+
+<div class="btn-container">
+<button class="reset-btn" onclick="resetData()">সব ডেটা ক্লিয়ার</button>
+</div>
+
+</div>
+
+<script>
+const totalDays=40;
+const waqts=["ফজর","যোহর","আসর","মাগরিব","এশা"];
+const grid=document.getElementById("grid");
+
+let prayerData=JSON.parse(localStorage.getItem("prayerTracker"))||{};
+let tasbih=JSON.parse(localStorage.getItem("tasbih"))||{subhan:0,alham:0,akbar:0};
+
+function createGrid(){
+grid.innerHTML="";
+let success=0,miss=0;
+
+for(let i=1;i<=totalDays;i++){
+let card=document.createElement("div");
+card.className="day-card";
+let checked=0,started=false,html="";
+
+waqts.forEach(w=>{
+let id=`d${i}-${w}`;
+if(prayerData[id]){checked++;started=true;}
+html+=`
+<div class="waqt-item">
+<input type="checkbox" ${prayerData[id]?"checked":""}
+onchange="save('${id}')"> ${w}
+</div>`;
+});
+
+let ok=checked===5;
+if(ok) success++;
+else if(started) miss++;
+
+card.innerHTML=`
+<h3>দিন ${i}</h3>
+${html}
+<span class="status-badge ${ok?"complete":"incomplete"}">
+${ok?"সফল":"অসম্পূর্ণ"}
+</span>`;
+grid.appendChild(card);
+}
+
+document.getElementById("success-count").innerText=success;
+document.getElementById("missed-count").innerText=miss;
+document.getElementById("total-days").innerText=Object.keys(prayerData).length?40:0;
+if(success===40) document.getElementById("reward-msg").style.display="block";
+}
+
+function save(id){
+prayerData[id]=!prayerData[id];
+localStorage.setItem("prayerTracker",JSON.stringify(prayerData));
+createGrid();
+}
+
+function inc(k){
+tasbih[k]++;
+document.getElementById(k).innerText=tasbih[k];
+localStorage.setItem("tasbih",JSON.stringify(tasbih));
+}
+
+function resetData(){
+if(confirm("সব ডেটা মুছে ফেলবেন?")){
+localStorage.clear();
+location.reload();
+}
+}
+
+["subhan","alham","akbar"].forEach(k=>{
+document.getElementById(k).innerText=tasbih[k];
+});
+
+createGrid();
+</script>
+
+</body>
+</html>
+
